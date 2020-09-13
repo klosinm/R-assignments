@@ -1,0 +1,104 @@
+---
+title: "hw1starter.rmd"
+author: "Your Name"
+date: "Date"
+output: word_document
+---
+
+The packages we need available for this program are: mosaic and dplyr.  
+
+```{r, packages}
+library(mosaic)
+library(dplyr)
+
+```
+
+We begin by reading in the data set named heights husband and wife.  This is a .csv file.  The R dataframe is named Heights.
+
+```{r, data}
+# read in data file
+
+Heights <- read.csv("/Users/monicaklosin/Desktop/Drive/GVSU/Fall 2020/STA321/hw1/heights husband and wife.csv",header=TRUE)
+
+```
+
+4.	Find numerical summaries for the variable Husband and Wife.  
+
+```{r, Q4}      
+# find numerical summaries
+favstats(~Husband, data= Heights, na.rm=TRUE)
+favstats(~Wife, data= Heights, na.rm=TRUE)
+
+```
+
+5.	Make histograms of the variables Husband and Wife.   
+
+```{r, Q5}
+# histograms
+
+
+```
+
+6.	Make a scatterplot with X = Husband and Y = Wife.  
+
+```{r, Q6}
+# scatterplot
+
+
+```
+
+7.	Find the linear correlation between X = Husband and Y = Wife.   
+
+```{r, Q7}
+# find correlation coefficient
+
+
+```
+
+SLR Model between Wife and Husband
+
+```{r, SLR}
+# find least-squares line
+
+
+#Use the summary( ) function to get the output from Model.
+
+
+# get anova table
+
+
+```
+
+11.	Make a scatterplot with X = Husband and Y = Wife that includes the regression line.  
+
+```{r, Q11}
+# scatterplot
+
+
+```
+
+12.	Find a 99% confidence interval for the slope.  
+
+```{r, Q12}
+# C.I. on slope
+
+
+```
+
+13.	Do the following intervals: 
+
+```{r, Q13}
+# confidence interval on mean of Y given X
+
+
+# prediction interval on Y given X
+
+
+#creating data frame
+
+
+#Husband 183 cm
+
+
+```
+
