@@ -1,6 +1,6 @@
 ---
 title: "hw1starter.rmd"
-author: "Your Name"
+author: "Monica Klosin"
 date: "Date"
 output: word_document
 ---
@@ -17,9 +17,9 @@ We begin by reading in the data set named heights husband and wife.  This is a .
 
 ```{r, data}
 # read in data file
-
-Heights <- read.csv("/Users/monicaklosin/Desktop/Drive/GVSU/Fall 2020/STA321/hw1/heights husband and wife.csv",header=TRUE)
-
+library(readr)
+Heights <- read_csv('/Users/monicaklosin/Desktop/GoogleDocs/GVSU/Fall 2020/STA321/R-assignments/hw1/hw1.csv')
+#View(Heights)
 ```
 
 4.	Find numerical summaries for the variable Husband and Wife.  
@@ -35,37 +35,37 @@ favstats(~Wife, data= Heights, na.rm=TRUE)
 
 ```{r, Q5}
 # histograms
-
-
+histogram(~Husband, data = Heights, type="count")
+histogram(~Wife, data = Heights, type="count")
 ```
 
 6.	Make a scatterplot with X = Husband and Y = Wife.  
 
 ```{r, Q6}
 # scatterplot
-
-
+xyplot(Wife~Husband, data = Heights, pch=19)
+cor(Heights$Wife, Heights$Husband)
 ```
 
 7.	Find the linear correlation between X = Husband and Y = Wife.   
 
 ```{r, Q7}
 # find correlation coefficient
-
-
+cat("r = ", cor(Wife~Husband, data = Heights))
 ```
 
-SLR Model between Wife and Husband
+10. SLR Model between Wife and Husband
 
 ```{r, SLR}
 # find least-squares line
 
 
 #Use the summary( ) function to get the output from Model.
-
+RObject = lm(Wife~Husband, data = Heights)
+summary(RObject)
 
 # get anova table
-
+anova(RObject)
 
 ```
 
@@ -73,7 +73,7 @@ SLR Model between Wife and Husband
 
 ```{r, Q11}
 # scatterplot
-
+xyplot(Wife~Husband, data = Heights, pch=19, type = c("p", "r"))
 
 ```
 
@@ -81,7 +81,7 @@ SLR Model between Wife and Husband
 
 ```{r, Q12}
 # C.I. on slope
-
+confint(RObject, "Husband", level=0.99)
 
 ```
 
@@ -89,16 +89,18 @@ SLR Model between Wife and Husband
 
 ```{r, Q13}
 # confidence interval on mean of Y given X
-
+Conf = predict.lm(RObject, interval="confidence", level = 0.97)
 
 # prediction interval on Y given X
-
+Pred = predict.lm(RObject, interval="prediction", level = 0.97)
 
 #creating data frame
-
+Int = data.frame(Heights$Husband, Conf,Pred)
 
 #Husband 183 cm
-
+One = Int%>%
+  filter(Heights.Husband == 183)
+print(One)
 
 ```
 
