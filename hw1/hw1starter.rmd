@@ -52,6 +52,7 @@ cor(Heights$Wife, Heights$Husband)
 ```{r, Q7}
 # find correlation coefficient
 cat("r = ", cor(Wife~Husband, data = Heights))
+cor.test(Wife~Husband, data = Heights)
 ```
 
 10. SLR Model between Wife and Husband

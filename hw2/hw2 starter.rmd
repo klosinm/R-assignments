@@ -1,0 +1,106 @@
+---
+title: "hw 2 starter.rmd"
+author: "John Gabrosek"
+date: "September 15, 2020"
+output: word_document
+---
+
+The packages we need available for this program are: mosaic and dplyr.  
+
+```{r, packages}
+library(mosaic)
+library(dplyr)
+
+```
+
+We begin by reading in the data set named ames.csv.  The R dataframe is named Ames.  Then, we select only the variables of interest for hw 2.
+
+```{r, data}
+# read in data file
+# read in data file
+library(readr)
+Ames <- read_csv('/Users/monicaklosin/Desktop/GoogleDocs/GVSU/Fall 2020/STA321/R-assignments/hw2/ames.csv')
+Ames = Ames %>% select(X1,X9,X12,X15,X16,X18,X20,Y)
+View(Ames)
+```
+
+1.	Find numerical summaries of the response variable Y = SalePrice.  
+
+```{r, Q1}
+# numerical summaries of the variable Y = SalePrice
+favstats(~Y, data = Ames, na.rm=TRUE)
+
+```
+
+2.	Make a histogram of the response variable Y = SalePrice
+
+```{r, Q2}
+# histogram of the response variable Y = SalePrice
+histogram(~Y, data = Ames, type="count")
+
+```
+
+Transform the response to logY.
+
+```{r, logY}
+# Transform the response to logY
+Ames$logY = log(Ames$Y)
+
+```
+
+4.	Fit the regression model saving the model output to an R Object named FullModel.    
+
+```{r, Q4}
+# Fit the regression model
+Model1 = lm(logY~X1+X9+X12+X15+X16+X18+X20, data=Ames)
+# Use summary() to get coefficients
+summary(Model1)
+
+
+```
+
+4h.	Use the Anova function to get the anova table for the FullModel.     
+
+```{r, Q4h}
+# anova table for the FullModel
+
+
+```
+
+5.	Make a scatterplot of logY on the vertical axis and Y-hat  
+
+```{r, Q5}
+# code to add fitted values to Ames data set
+Ames$FM.fitted = FullModel$fitted.values
+
+# scatterplot of logY on the vertical axis and Y-hat
+
+
+```
+
+5 (c)	Find the value of the linear correlation between the actual logY values and FM.fitted.     
+
+```{r, Q5c}
+# linear correlation between the actual logY values and FM.fitted
+
+
+```
+
+7. Fit the regression model that has X9, X12, and X20. Save the model output to an R Object named ReducedModel
+
+```{r, Q7}
+# Fit the regression model
+
+
+#anova function
+
+
+```
+
+P-Value for Partial F-Test
+
+```{r, Q7c}
+# P-Value for Partial F-Test
+
+
+```
