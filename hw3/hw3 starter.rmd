@@ -1,0 +1,99 @@
+---
+title: "hw 3 starter.rmd"
+author: "John Gabrosek"
+date: "September 18, 2020"
+output: word_document
+---
+
+The packages we need available for this program are: mosaic, dplyr, and broom.  
+
+```{r, packages}
+library(mosaic)
+library(dplyr)
+library(broom)
+
+```
+
+We begin by reading in the data set named usedcars.csv.  The R dataframe is named UsedCars.  Then, we select only the variables of interest for hw 3.
+
+```{r, data}
+# read in data file
+UsedCars <- read.csv("R:/STAT/gabrosek/sta321/LM 3/usedcars.csv",header=TRUE)
+
+```
+
+1. scatterplot of Y = Price and X = Mileage
+
+
+```{r, Q1}
+# scatterplot of Y = Price and X = Mileage
+
+
+```
+
+2.	 Make a histogram of the response variable Price.  
+
+```{r, Q2}
+# histogram of the response variable Price
+
+
+```
+
+Transform Y
+
+```{r, logY}
+# Transform the response to logY
+
+
+```
+
+3.	Make a histogram of the response variable logPrice. 
+
+```{r, Q3}
+# histogram of the response variable logPrice.
+
+
+```
+
+5.	Fit Model 1 saving the model output to an R Object named Model1. Then, save the residuals to an RObject named Model1_metrics.    
+
+```{r, Q5}
+# Fit the regression model
+
+
+# save the residuals
+
+
+```
+
+5. (b) Make a plot of the standardized residuals vs y-hat.      
+
+```{r, Q5b}
+# Standardized Residuals -Y-Hat Plot
+
+
+```
+
+5. (f)	Make a normal probability plot of the standardized residuals.  
+
+```{r, Q5f}
+# normal probability plot of the standardized residuals
+
+
+```
+
+6. (c)	Write the code to identify the points with high leverage and save them to an R Object named HighLev.  
+
+```{r, Q6c}
+# identify the points with high leverage
+
+
+```
+
+6. (d)	Make a plot of Cook’s D by observation number using the HighLev R Object.  
+
+```{r, Q6c}
+# cooks distance by observation plot
+
+
+```
