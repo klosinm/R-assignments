@@ -18,8 +18,8 @@ We begin by reading in the data set named usedcars.csv.  The R dataframe is name
 
 ```{r, data}
 # read in data file
-UsedCars <- read.csv("R:/STAT/gabrosek/sta321/LM 3/usedcars.csv",header=TRUE)
-
+library(readr)
+UsedCars <- read_csv('/Users/monicaklosin/Desktop/GoogleDocs/GVSU/Fall 2020/STA321/R-assignments/hw3/usedcars.csv')
 ```
 
 1. scatterplot of Y = Price and X = Mileage
@@ -27,7 +27,7 @@ UsedCars <- read.csv("R:/STAT/gabrosek/sta321/LM 3/usedcars.csv",header=TRUE)
 
 ```{r, Q1}
 # scatterplot of Y = Price and X = Mileage
-
+xyplot(Price~Mileage, data = UsedCars, pch=19)
 
 ```
 
@@ -35,7 +35,7 @@ UsedCars <- read.csv("R:/STAT/gabrosek/sta321/LM 3/usedcars.csv",header=TRUE)
 
 ```{r, Q2}
 # histogram of the response variable Price
-
+histogram(~Price, data = UsedCars, type="count", breaks=seq(0, 80000, 1000))
 
 ```
 
@@ -43,7 +43,7 @@ Transform Y
 
 ```{r, logY}
 # Transform the response to logY
-
+UsedCars$logY = log(UsedCars$Price)
 
 ```
 
@@ -51,6 +51,7 @@ Transform Y
 
 ```{r, Q3}
 # histogram of the response variable logPrice.
+histogram(~logY, data = UsedCars, type="count", breaks=seq(8, 12, .1))
 
 
 ```
@@ -59,18 +60,25 @@ Transform Y
 
 ```{r, Q5}
 # Fit the regression model
-
+UsedCars$X1 <- UsedCars$Mileage 
+#RObject: solving linear model
+#finding the Beta hat and alpha hat
+#beta hat is the coefficent on millage, tells how much millage 
+Model1 = lm(logY~X1, data = UsedCars)
 
 # save the residuals
 
-
+Model1.metrics = augment(Model1)
+head(Model1.metrics)
+#just residuals
+head(Model1$residuals)
 ```
 
 5. (b) Make a plot of the standardized residuals vs y-hat.      
 
 ```{r, Q5b}
 # Standardized Residuals -Y-Hat Plot
-
+xyplot(.std.resid~.fitted, data=Model1.metrics, xlab="Predicted", ylab="Standardized Residuals")
 
 ```
 
@@ -78,7 +86,7 @@ Transform Y
 
 ```{r, Q5f}
 # normal probability plot of the standardized residuals
-
+xqqmath(~.std.resid, data = Model1.metrics, xlab="quantile", ylab="standardized residuals")
 
 ```
 
@@ -86,14 +94,22 @@ Transform Y
 
 ```{r, Q6c}
 # identify the points with high leverage
-
+HighLev = Model1.metrics %>% filter(.hat>.00497512)
+NROW(HighLev)
 
 ```
 
 6. (d)	Make a plot of Cook’s D by observation number using the HighLev R Object.  
 
 ```{r, Q6c}
-# cooks distance by observation plot
+# cooks distance by observation plot, for the top five values are identified
+#subset six largest Cooks D
+RObject2 = Model1.metrics[order(-Model1.metrics$.cooksd),]
+#HighLev = HighLev[order(-HighLev$.hat),]
+plot(Model1, 4, id.n = 2) 
+
+CooksD = Model1.metrics[order(-Model1.metrics$.cooksd),]
+CooksD
 
 
 ```
