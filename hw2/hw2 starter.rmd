@@ -50,6 +50,7 @@ Ames$logY = log(Ames$Y)
 ```{r, Q4}
 # Fit the regression model
 Model1 = lm(logY~X9+X12+X15+X16+X18+X20, data=Ames)
+
 # Use summary() to get coefficients
 summary(Model1)
 ```

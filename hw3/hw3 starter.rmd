@@ -19,7 +19,7 @@ We begin by reading in the data set named usedcars.csv.  The R dataframe is name
 ```{r, data}
 # read in data file
 library(readr)
-UsedCars <- read_csv('/Users/monicaklosin/Desktop/GoogleDocs/GVSU/Fall 2020/STA321/R-assignments/hw3/usedcars.csv')
+UsedCars <- read.csv('/Users/monicaklosin/Desktop/GoogleDocs/GVSU/Fall 2020/STA321/R-assignments/hw3/usedcars.csv')
 ```
 
 1. scatterplot of Y = Price and X = Mileage
@@ -86,7 +86,7 @@ xyplot(.std.resid~.fitted, data=Model1.metrics, xlab="Predicted", ylab="Standard
 
 ```{r, Q5f}
 # normal probability plot of the standardized residuals
-xqqmath(~.std.resid, data = Model1.metrics, xlab="quantile", ylab="standardized residuals")
+xqqmath(~.std.resid,data = Model1.metrics, xlab= "quantile", ylab = "standardized residuals")
 
 ```
 
@@ -94,7 +94,8 @@ xqqmath(~.std.resid, data = Model1.metrics, xlab="quantile", ylab="standardized 
 
 ```{r, Q6c}
 # identify the points with high leverage
-HighLev = Model1.metrics %>% filter(.hat>.00497512)
+HighLev = Model1.metrics %>% 
+filter(.hat>.00497512)
 NROW(HighLev)
 
 ```
@@ -104,12 +105,51 @@ NROW(HighLev)
 ```{r, Q6c}
 # cooks distance by observation plot, for the top five values are identified
 #subset six largest Cooks D
-RObject2 = Model1.metrics[order(-Model1.metrics$.cooksd),]
-#HighLev = HighLev[order(-HighLev$.hat),]
-plot(Model1, 4, id.n = 2) 
 
-CooksD = Model1.metrics[order(-Model1.metrics$.cooksd),]
-CooksD
+RObject2 = HighLev[order(-HighLev$.cooksd),]
+#HighLev = HighLev[order(-HighLev$.hat),]
+plot(Model1, 4, id.n = 5) 
+
 
 
 ```
+
+
+```{r}
+
+UsedCars$obs_number <- 1:nrow(UsedCars)
+
+UsedCars$mse <- (UsedCars$Price - Model1$fitted.values)^2
+
+```
+
+
+```{r}
+
+UsedCars %>% ggplot(aes(Mileage, Price), label = obs_number) + 
+  geom_point() + 
+  geom_smooth(method='lm', formula= y~x)+
+  #geom_text(aes(label=obs_number),hjust=0, vjust=0)+
+  #theme_bw()
+
+```
+
+
+
+
+
+```{r}
+
+
+Model1.metrics %>% ggplot(aes(.std.resid)) + 
+  geom_density() +
+  stat_function(fun = dnorm, colour = 'red') + 
+  theme_minimal()
+  
+  
+```
+
+
+
+
+

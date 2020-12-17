@@ -1,0 +1,143 @@
+---
+title: "HW 4 starter"
+author: "Monica Klosin"
+date: "11/19/2020"
+output: word_document
+---
+
+The packages we need available for this program are: mosaic, dplyr, broom, and olsrr.  
+
+```{r, packages}
+library(mosaic)
+library(dplyr)
+library(broom)
+library(olsrr)
+library(readr)
+
+```
+
+We begin by reading in the data set named Golf2003.  This is a .csv file.  We create a dataframe named Golf.
+
+```{r, data}
+# read in data file
+Golf<- read_csv('/Users/monicaklosin/Desktop/GoogleDocs/GVSU/Fall 2020/STA321/R-assignments/hw4/Golf2003.csv')
+```
+
+1.	Create a dummy variable named D1 for X1 = Country, where USA is given the value 1 and not USA is given the value 0
+
+```{r, Q1}
+# dummy variable
+Golf$D1 <- ifelse(Golf$Country== "USA", 1, 0)
+Golf$D1
+
+```
+
+2.	Fit the full model and save the results to an R object named FM.  
+
+```{r, Q2}
+# Full Model
+
+Model1 = lm(Scoring~D1+Driving+Fairways+GIR+Putt+Birdie+Sand+Scrambling+Bounceback, data=Golf)
+Model1
+```
+
+3.	Find all possible regression models and save the results to an R object named All.  
+
+```{r, Q3}
+# Summarize all possible regressions
+
+ALL = ols_step_all_possible(Model1)
+ALL
+```
+
+4.	Find the best 1-variable, 2-variable, etc. regression models using the best subsets and save the results to an R object named Best.  
+
+```{r, Q4}
+# Summarize best models
+
+Best = ols_step_best_subset(Model1, metric = c("cp"))
+#plot results
+
+plot(Best)
+```
+
+5.	Use the Forward Selection procedure with penter = .05 and save the results to an R object named Forward.  
+
+```{r, Q5}
+# forward selection
+
+Forward = ols_step_forward_p(Model1, penter = 0.05, details = TRUE)
+Forward
+```
+
+6.	Use the Backward Elimination procedure with prem = .10 and save the results to an R object named Backward.  
+
+```{r, Q6}
+# backward elimination
+
+Backward = ols_step_backward_p(Model1, prem = .10, details = TRUE)
+Backward
+```
+
+7.	Use the Stepwise procedure with prenter = .05 and prem = .10 and save the results to an R object named Stepwise.  
+
+```{r, Q7}
+# stepwise
+
+Stepwise = ols_step_both_p(Model1, prenter = 0.05, prem = .10, progress = TRUE)
+Stepwise
+```
+
+8.	Fit the final model and save to an R object named FinalModel.  
+
+```{r, Q8}
+# Final Model
+FinalModel = lm(Scoring~GIR+Putt+Birdie+Scrambling, data= Golf)
+FinalModel
+```
+
+9.	Write the code to get the variance inflation factors for the final model.  
+
+```{r, Q9}
+# VIF
+ols_vif_tol(FinalModel)
+```
+
+10.	Write the code to get a chart of the Cooks D for the final model
+
+```{r, Q10}
+# Cooks D
+ols_plot_cooksd_chart(FinalModel, print_plot = TRUE)
+
+```
+
+11.	Write the code to make Studentized Residuals vs. Predicted.  
+
+```{r, Q11}
+# Residual v. Predicted
+
+ols_plot_resid_stud_fit(FinalModel, print_plot = TRUE)
+```
+
+
+12.	Write the code to make a histogram of the studentized residuals.    
+
+```{r, Q12}
+# Histogram of Residuals
+ols_plot_resid_hist(Model1, print_plot = TRUE)
+
+xqqmath(~.std.resid, data = Model1.metrics, xlab="quantile", ylab="standardized residuals")
+
+
+
+
+```
+
+
+
+
+
+
+
+
+
